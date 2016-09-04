@@ -1,0 +1,23 @@
+{
+  "name": "streamline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikatlas/streamline.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nikatlas/streamline/issues"
+  },
+  "homepage": "https://github.com/nikatlas/streamline#readme",
+  "dependencies": {
+    "server-manager": "git+https://github.com/nikatlas/server-manager.git",
+    "streamodio": "git+https://github.com/nikatlas/streamodio.git"
+  }
+}
