@@ -37,7 +37,7 @@ if(mode == 'server'){
 	});
 	
 	// read audio from stereo mix
-	streamodio.init();
+	streamodio.initInput();
 	// transmit audio via streaming the blocks
 	streamodio.setOnRead(function(data){
 		var out = {
@@ -55,7 +55,7 @@ else if(mode == 'client'){
 	var port = process.argv[3];
 	var ip 	 = process.argv[4] || '0.0.0.0';
 	// read audio from stereo mix
-	streamodio.init(0,1);
+	streamodio.init();
 	sm.createClient("StreamIn", port, ip)
 	.then(function (client) {
 		client._socket.setEncoding('utf8');
@@ -66,6 +66,11 @@ else if(mode == 'client'){
 		client._socket.on("data",function(buffer){
 			try{		
 				var out = JSON.parse(buffer);
+				for( var i=0;i<out.data.length;i++){
+					out.data[i] *= 2000;
+				}
+				streamodio.engine.write(out.data);
+				console.log(out.data);
 			}
 			catch(e){
 				//console.log("E");
