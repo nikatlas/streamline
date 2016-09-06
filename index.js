@@ -55,9 +55,17 @@ else if(mode == 'client'){
 	sm.createClient("StreamIn", port, ip)
 	.then(function (client) {
 		client._socket.setEncoding('utf8');
+		client._socket.on("connection",function(){
+			console.log("connection");
+		});
+
 		client._socket.on("data",function(buffer){
-			var out = JSON.parse(buffer);
-			streamodio.engine.write(out.data);
+			try{		
+				var out = JSON.parse(buffer);
+			}
+			catch(e){
+				//console.log("E");
+			}
 		});
 		client._socket.on("end", function(){	
 			console.log("BlockReady");
