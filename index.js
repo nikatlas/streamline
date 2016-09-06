@@ -16,15 +16,21 @@ if(mode == 'server'){
 		// w8 for connections 
 		server._server.on('connection', function(socket){
 			socket.setEncoding('utf8');
+			socket.on("close",function(){
+				console.log("client DROP");
+			  	var index = sockets.indexOf(socket);
+			  	if (index > -1) {
+				    sockets.splice(index, 1);
+				}
+			});
+			socket.on("error",function(){
+				console.log("err");	 	
+			});
 			sockets.push(socket);
 			streamodio.start();
 		});
 		server._server.on('clientError', function(err, socket){
 		  	socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
-		  	var index = sockets.indexOf(socket);
-		  	if (index > -1) {
-			    sockets.splice(index, 1);
-			}
 		});
 
             console.log(streamodio.engine.getOptions());
@@ -37,8 +43,6 @@ if(mode == 'server'){
 		var out = {
 			data : data
 		}
-		console.log("DSA");
-		console.log(sockets.length);
 		for(var i = 0 ; i < sockets.length; i++){
 			sockets[i].write(JSON.stringify(out));
 		}
