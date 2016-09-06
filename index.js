@@ -27,6 +27,7 @@ if(mode == 'server'){
 			}
 		});
 
+            console.log(streamodio.engine.getOptions());
 	});
 	
 	// read audio from stereo mix
@@ -36,6 +37,8 @@ if(mode == 'server'){
 		var out = {
 			data : data
 		}
+		console.log("DSA");
+		console.log(sockets.length);
 		for(var i = 0 ; i < sockets.length; i++){
 			sockets[i].write(JSON.stringify(out));
 		}
@@ -48,7 +51,7 @@ else if(mode == 'client'){
 	var port = process.argv[3];
 	var ip 	 = process.argv[4] || '0.0.0.0';
 	// read audio from stereo mix
-	streamodio.init();
+	streamodio.init(0,1);
 	sm.createClient("StreamIn", port, ip)
 	.then(function (client) {
 		client._socket.setEncoding('utf8');
